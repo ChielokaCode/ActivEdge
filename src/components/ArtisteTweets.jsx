@@ -12,6 +12,7 @@ const ArtisteTweets = () => {
   const [editComment, setEditComment] = useState("");
   const [newCommentError, setNewCommentError] = useState("");
   const [editCommentError, setEditCommentError] = useState("");
+  const [userProfile, setUserProfile] = useState({});
   const { userId } = useParams();
   const navigate = useNavigate();
 
@@ -29,6 +30,24 @@ const ArtisteTweets = () => {
     };
 
     fetchTweets();
+  }, [userId]);
+
+  useEffect(() => {
+    // Define an async function to fetch the data
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch(
+          `https://jsonplaceholder.typicode.com/users/${userId}`
+        );
+        const data = await response.json();
+        setUserProfile(data);
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
+
+    // Call the fetch function
+    fetchUsers();
   }, [userId]);
 
   const handleShowComment = async (postId) => {
@@ -63,8 +82,8 @@ const ArtisteTweets = () => {
         {
           postId,
           body: newComment,
-          name: "Anonymous", // Replace with actual data if available
-          email: "anonymous@example.com", // Replace with actual data if available
+          name: userProfile.name,
+          email: userProfile.email,
         }
       );
 
