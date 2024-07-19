@@ -38,12 +38,14 @@ const ArtisteList = () => {
   return (
     <div className="container mx-auto p-4 space-y-3">
       <h1 className="text-3xl font-bold">Artiste List</h1>
+      <br />
+      <br />
       {users.map((user) => (
         <div
           key="{user.id}"
           className="flex flex-col rounded-lg shadow-lg bg-white text-left cursor-pointer p-4"
         >
-          {user.name}
+          <h1 className="font-bold">{user.name}</h1>
           <div className="flex justify-evenly">
             <button
               className="hover:scale-110 bg-green-300 p-4"

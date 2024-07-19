@@ -51,6 +51,7 @@ const ArtisteTweets = () => {
   const handleSubmit = async (event, postId) => {
     event.preventDefault();
 
+    //Validation check to check that no null values
     if (newComment.trim() === "") {
       setNewCommentError("Comment cannot be empty");
       return;
@@ -82,6 +83,7 @@ const ArtisteTweets = () => {
   const handleEditComment = async (event, commentId) => {
     event.preventDefault();
 
+    //Validation check to check that no null values
     if (editComment.trim() === "") {
       setEditCommentError("Comment cannot be empty");
       return;
