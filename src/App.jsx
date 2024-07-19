@@ -6,6 +6,7 @@ import "./output.css";
 const ArtisteList = React.lazy(() => import("./components/ArtisteList"));
 const UserProfile = React.lazy(() => import("./components/UserProfile"));
 const ArtisteAlbum = React.lazy(() => import("./components/ArtisteAlbum"));
+const AlbumDetails = React.lazy(() => import("./components/AlbumDetails"));
 
 function App() {
   return (
@@ -52,6 +53,20 @@ function App() {
                 }
               >
                 <ArtisteAlbum />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/album-details/:albumId"
+            element={
+              <Suspense
+                fallback={
+                  <div className="flex items-center justify-center h-[100vh]">
+                    Loading...
+                  </div>
+                }
+              >
+                <AlbumDetails />
               </Suspense>
             }
           />

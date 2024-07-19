@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ArtisteAlbum = () => {
   const [artisteAlbum, setArtisteAlbum] = useState([]);
   const { userId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Define an async function to fetch the data
     const fetchUsers = async () => {
-      console.log(userId);
       try {
         const response = await fetch(
           `https://jsonplaceholder.typicode.com/albums?userId=${userId}`
@@ -24,25 +24,33 @@ const ArtisteAlbum = () => {
     fetchUsers();
   }, [userId]);
 
-  const handleAlbumDetails = (AlbumId) => {
-    Navigate(`/album-details/${AlbumId}`);
+  const handleAlbumDetails = (albumId) => {
+    navigate(`/album-details/${albumId}`);
+  };
+
+  const handleGoBack = () => {
+    navigate(-1);
   };
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold">ArtisteAlbum</h1>
+    <div className="container mx-auto p-4">
+      <button className="font-bold text-xl" onClick={handleGoBack}>
+        Go Back
+      </button>
+      <h1 className="text-3xl font-bold">Artiste Albums</h1>
       <br />
       <div className="space-y-2">
-        {artisteAlbum.map((user) => (
+        {artisteAlbum.map((album) => (
           <div
-            key="{user.id}"
-            className="flex flex-col rounded-lg shadow-lg bg-gray-300 text-left cursor-pointer p-4 capitalize"
+            key="{album.id}"
+            className="flex flex-col rounded-lg shadow-lg bg-white text-left cursor-pointer p-4 capitalize"
           >
-            {user.title}
-            <div className="flex justify-between">
+            <h1 className="font-bold">Album Title: </h1>
+            {album.title}
+            <div className="flex justify-evenly">
               <button
                 className="hover:scale-110 bg-green-300 p-4"
-                onClick={() => handleAlbumDetails(user.id)}
+                onClick={() => handleAlbumDetails(album.id)}
               >
                 View Album Details
               </button>
