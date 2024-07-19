@@ -60,6 +60,3 @@ const ArtisteList = () => {
 };
 
 export default ArtisteList;
-
-
-ArtisteList
