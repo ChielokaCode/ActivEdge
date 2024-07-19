@@ -33,7 +33,10 @@ const AlbumDetails = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <button className="font-bold text-xl" onClick={handleGoBack}>
+      <button
+        className="font-bold text-xl cursor-pointer"
+        onClick={handleGoBack}
+      >
         Go Back
       </button>
       <h1 className="text-3xl font-bold mb-4 mt-4">Album Details</h1>

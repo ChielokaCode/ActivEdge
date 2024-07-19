@@ -31,7 +31,7 @@ const UserProfile = () => {
   return (
     <div>
       <button
-        className="font-bold text-xl text-left p-4"
+        className="font-bold text-xl text-left p-4 cursor-pointer"
         onClick={handleGoBack}
       >
         Go Back

@@ -26,8 +26,13 @@ const ArtisteList = () => {
   const handleUserProfile = (userId) => {
     navigate(`/user-profile/${userId}`);
   };
+
   const handleUserAlbum = (userId) => {
     navigate(`/user-album/${userId}`);
+  };
+
+  const handleUserTweets = (userId) => {
+    navigate(`/user-tweets/${userId}`);
   };
 
   return (
@@ -51,6 +56,12 @@ const ArtisteList = () => {
               onClick={() => handleUserProfile(user.id)}
             >
               View Profile
+            </button>
+            <button
+              className="hover:scale-110 bg-green-300 p-4"
+              onClick={() => handleUserTweets(user.id)}
+            >
+              Show Tweets
             </button>
           </div>
         </div>

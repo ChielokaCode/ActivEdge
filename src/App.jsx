@@ -7,6 +7,7 @@ const ArtisteList = React.lazy(() => import("./components/ArtisteList"));
 const UserProfile = React.lazy(() => import("./components/UserProfile"));
 const ArtisteAlbum = React.lazy(() => import("./components/ArtisteAlbum"));
 const AlbumDetails = React.lazy(() => import("./components/AlbumDetails"));
+const ArtisteTweets = React.lazy(() => import("./components/ArtisteTweets"));
 
 function App() {
   return (
@@ -67,6 +68,20 @@ function App() {
                 }
               >
                 <AlbumDetails />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/user-tweets/:userId"
+            element={
+              <Suspense
+                fallback={
+                  <div className="flex items-center justify-center h-[100vh]">
+                    Loading...
+                  </div>
+                }
+              >
+                <ArtisteTweets />
               </Suspense>
             }
           />
