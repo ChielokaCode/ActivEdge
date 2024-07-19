@@ -9,6 +9,9 @@ const ArtisteTweets = () => {
   const [visiblePostId, setVisiblePostId] = useState(null);
   const [newComment, setNewComment] = useState("");
   const [editCommentId, setEditCommentId] = useState(null);
+  const [editComment, setEditComment] = useState("");
+  const [newCommentError, setNewCommentError] = useState("");
+  const [editCommentError, setEditCommentError] = useState("");
   const { userId } = useParams();
   const navigate = useNavigate();
 
@@ -48,6 +51,11 @@ const ArtisteTweets = () => {
   const handleSubmit = async (event, postId) => {
     event.preventDefault();
 
+    if (newComment.trim() === "") {
+      setNewCommentError("Comment cannot be empty");
+      return;
+    }
+
     try {
       const response = await axios.post(
         "https://jsonplaceholder.typicode.com/comments",
@@ -65,6 +73,7 @@ const ArtisteTweets = () => {
       }));
 
       setNewComment("");
+      setNewCommentError(""); // Clear error message
     } catch (error) {
       console.error("Error posting comment:", error);
     }
@@ -73,24 +82,29 @@ const ArtisteTweets = () => {
   const handleEditComment = async (event, commentId) => {
     event.preventDefault();
 
+    if (editComment.trim() === "") {
+      setEditCommentError("Comment cannot be empty");
+      return;
+    }
+
     try {
       await axios.put(
         `https://jsonplaceholder.typicode.com/comments/${commentId}`,
         {
-          body: newComment,
+          body: editComment,
         }
       );
 
-      // Update comments state
       setComments((prevComments) => {
         const updatedComments = prevComments[visiblePostId].map((comment) =>
-          comment.id === commentId ? { ...comment, body: newComment } : comment
+          comment.id === commentId ? { ...comment, body: editComment } : comment
         );
         return { ...prevComments, [visiblePostId]: updatedComments };
       });
 
-      setNewComment("");
-      setEditCommentId(null); // Reset edit state
+      setEditComment("");
+      setEditCommentId(null);
+      setEditCommentError(""); // Clear error message
     } catch (error) {
       console.error("Error editing comment:", error);
     }
@@ -102,7 +116,6 @@ const ArtisteTweets = () => {
         `https://jsonplaceholder.typicode.com/comments/${commentId}`
       );
 
-      // Update comments state
       setComments((prevComments) => {
         const filteredComments = prevComments[visiblePostId].filter(
           (comment) => comment.id !== commentId
@@ -116,6 +129,21 @@ const ArtisteTweets = () => {
 
   const handleGoBack = () => {
     navigate(-1);
+  };
+
+  const handleNewCommentChange = (event) => {
+    setNewComment(event.target.value);
+    setNewCommentError(""); // Clear error message while typing
+  };
+
+  const handleEditCommentChange = (event) => {
+    setEditComment(event.target.value);
+    setEditCommentError(""); // Clear error message while typing
+  };
+
+  const startEditComment = (comment) => {
+    setEditCommentId(comment.id);
+    setEditComment(comment.body); // Set the comment body for editing
   };
 
   return (
@@ -156,10 +184,15 @@ const ArtisteTweets = () => {
                   type="text"
                   id="comment"
                   value={newComment}
-                  onChange={(e) => setNewComment(e.target.value)}
+                  onChange={handleNewCommentChange}
                   placeholder="Write Comment here"
-                  className="mt-2 p-2 border border-gray-300 rounded-lg w-full"
+                  className={`mt-2 p-2 border border-gray-300 rounded-lg w-full ${
+                    newCommentError ? "border-red-500" : ""
+                  }`}
                 />
+                {newCommentError && (
+                  <p className="text-red-500 text-sm">{newCommentError}</p>
+                )}
                 <button
                   type="submit"
                   className="mt-2 bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 mb-2"
@@ -170,7 +203,7 @@ const ArtisteTweets = () => {
             )}
 
             <button
-              className="hover:scale-90 cursor-pointer bg-green-300 p-4"
+              className="hover:bg-green-400 cursor-pointer bg-green-300 p-4 m-2"
               onClick={() => handleShowComment(tweet.id)}
             >
               {visiblePostId === tweet.id ? "Hide Comments" : "Show Comments"}
@@ -188,36 +221,49 @@ const ArtisteTweets = () => {
                     <p className="mt-2">{comment.body}</p>
 
                     <div className="flex flex-col">
-                      <form
-                        onSubmit={(e) => handleEditComment(e, comment.id)}
-                        className="mt-2"
-                      >
-                        <label
-                          htmlFor={`edit-comment-${comment.id}`}
-                          className="block text-lg font-semibold"
+                      {editCommentId === comment.id ? (
+                        <form
+                          onSubmit={(e) => handleEditComment(e, comment.id)}
+                          className="mt-2"
                         >
-                          Edit Comment:
-                        </label>
-                        <input
-                          type="text"
-                          id={`edit-comment-${comment.id}`}
-                          value={editCommentId === comment.id ? newComment : ""}
-                          onChange={(e) => {
-                            setNewComment(e.target.value);
-                            setEditCommentId(comment.id);
-                          }}
-                          placeholder="Edit Comment here"
-                          className="mt-2 p-2 border border-gray-300 rounded-lg w-full"
-                        />
+                          <label
+                            htmlFor={`edit-comment-${comment.id}`}
+                            className="block text-lg font-semibold"
+                          >
+                            Edit Comment:
+                          </label>
+                          <input
+                            type="text"
+                            id={`edit-comment-${comment.id}`}
+                            value={editComment}
+                            onChange={handleEditCommentChange}
+                            placeholder="Edit Comment here"
+                            className={`mt-2 p-2 border border-gray-300 rounded-lg w-full ${
+                              editCommentError ? "border-red-500" : ""
+                            }`}
+                          />
+                          {editCommentError && (
+                            <p className="text-red-500 text-sm">
+                              {editCommentError}
+                            </p>
+                          )}
+                          <button
+                            type="submit"
+                            className="mt-2 bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 mb-2"
+                          >
+                            Edit
+                          </button>
+                        </form>
+                      ) : (
                         <button
-                          type="submit"
-                          className="mt-2 bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 mb-2"
+                          className="mt-2 bg-yellow-500 text-white p-2 rounded-lg hover:bg-yellow-600 mb-2"
+                          onClick={() => startEditComment(comment)}
                         >
                           Edit
                         </button>
-                      </form>
+                      )}
                       <button
-                        className="hover:scale-90 cursor-pointer bg-red-300 p-4"
+                        className="hover:bg-red-400  cursor-pointer bg-red-300 p-4"
                         onClick={() => handleDeleteComment(comment.id)}
                       >
                         Delete
