@@ -9,6 +9,6 @@ d.) Allows the artist to tweet, update tweet, and delete tweet
 - Get artist albums (GET)https://jsonplaceholder.typicode.com/albums
 - Get album photos (GET)https://jsonplaceholder.typicode.com/albums/{album-id}/photos
 - Get all tweets (GET)https://jsonplaceholder.typicode.com/comments
-- Create tweet (POST)https://jsonplaceholder.typicode.com/comments*note* => Add form validation and validation should happen while typing
+- Create tweet (POST)https://jsonplaceholder.typicode.com/comments => Add form validation and validation should happen while typing
 - Update tweet (PUT)https://jsonplaceholder.typicode.com/comments/{comment-id}
 - Delete tweet (DELETE)https://jsonplaceholder.typicode.com/comments/{comment-id}
