@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "./Button";
 
 const ArtisteList = () => {
   const [users, setUsers] = useState([]);
@@ -61,24 +62,21 @@ const ArtisteList = () => {
             >
               <h1 className="font-bold">{user.name}</h1>
               <div className="flex justify-evenly">
-                <button
-                  className="hover:scale-110 bg-green-300 p-4"
+                <Button
+                  styling="hover:scale-110 bg-green-300 p-4"
                   onClick={() => handleUserAlbum(user.id)}
-                >
-                  View Album
-                </button>
-                <button
-                  className="hover:scale-110 bg-green-300 p-4"
+                  text="View Album"
+                />
+                <Button
+                  styling="hover:scale-110 bg-green-300 p-4"
                   onClick={() => handleUserProfile(user.id)}
-                >
-                  View Profile
-                </button>
-                <button
-                  className="hover:scale-110 bg-green-300 p-4"
+                  text="View Profile"
+                />
+                <Button
+                  styling="hover:scale-110 bg-green-300 p-4"
                   onClick={() => handleUserTweets(user.id)}
-                >
-                  Show Tweets
-                </button>
+                  text="Show Tweets"
+                />
               </div>
             </div>
           ))}

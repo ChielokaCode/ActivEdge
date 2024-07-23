@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Button from "./Button";
 
 const ArtisteTweets = () => {
   const [artisteTweets, setArtisteTweets] = useState([]);
@@ -223,12 +224,13 @@ const ArtisteTweets = () => {
               </form>
             )}
 
-            <button
-              className="hover:bg-green-400 cursor-pointer bg-green-300 p-4 m-2"
+            <Button
+              styling="hover:bg-green-400 text-center cursor-pointer bg-green-300 p-4 m-2"
               onClick={() => handleShowComment(tweet.id)}
-            >
-              {visiblePostId === tweet.id ? "Hide Comments" : "Show Comments"}
-            </button>
+              text={
+                visiblePostId === tweet.id ? "Hide Comments" : "Show Comments"
+              }
+            />
 
             {visiblePostId === tweet.id && (
               <div className="mt-4 space-y-2">
@@ -276,19 +278,19 @@ const ArtisteTweets = () => {
                           </button>
                         </form>
                       ) : (
-                        <button
-                          className="mt-2 bg-yellow-500 text-white p-2 rounded-lg hover:bg-yellow-600 mb-2"
+                        <Button
+                          styling={
+                            "mt-2 text-center bg-yellow-500 text-white p-2 rounded-lg hover:bg-yellow-600 mb-2 text-black"
+                          }
                           onClick={() => startEditComment(comment)}
-                        >
-                          Edit
-                        </button>
+                          text={"Edit"}
+                        />
                       )}
-                      <button
-                        className="hover:bg-red-400  cursor-pointer bg-red-300 p-4"
+                      <Button
+                        styling="hover:bg-red-400 text-center cursor-pointer bg-red-300 p-4"
                         onClick={() => handleDeleteComment(comment.id)}
-                      >
-                        Delete
-                      </button>
+                        text="Delete"
+                      />
                     </div>
                   </div>
                 ))}

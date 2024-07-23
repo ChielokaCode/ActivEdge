@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Button from "./Button";
 
 const ArtisteAlbum = () => {
   const [artisteAlbum, setArtisteAlbum] = useState([]);
@@ -51,12 +52,11 @@ const ArtisteAlbum = () => {
             <h1 className="font-bold">Album Title: </h1>
             {album.title}
             <div className="flex justify-evenly">
-              <button
-                className="hover:scale-110 bg-green-300 p-4"
+              <Button
+                styling="hover:scale-110 bg-green-300 p-4"
                 onClick={() => handleAlbumDetails(album.id)}
-              >
-                View Album Details
-              </button>
+                text="View Album Details"
+              />
             </div>
           </div>
         ))}
