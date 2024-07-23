@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Button from "./Button";
+import CustomForm from "./CustomForm";
 
 const ArtisteTweets = () => {
   const [artisteTweets, setArtisteTweets] = useState([]);
@@ -192,36 +193,26 @@ const ArtisteTweets = () => {
             </div>
 
             {visiblePostId === tweet.id && (
-              <form
+              <CustomForm
                 onSubmit={(e) => handleSubmit(e, tweet.id)}
-                className="mt-4"
-              >
-                <label
-                  htmlFor="comment"
-                  className="block text-lg font-semibold"
-                >
-                  Post Comment:
-                </label>
-                <input
-                  type="text"
-                  id="comment"
-                  value={newComment}
-                  onChange={handleNewCommentChange}
-                  placeholder="Write Comment here"
-                  className={`mt-2 p-2 border border-gray-300 rounded-lg w-full ${
-                    newCommentError ? "border-red-500" : ""
-                  }`}
-                />
-                {newCommentError && (
-                  <p className="text-red-500 text-sm">{newCommentError}</p>
-                )}
-                <button
-                  type="submit"
-                  className="mt-2 bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 mb-2"
-                >
-                  Post
-                </button>
-              </form>
+                formStyling="mt-4"
+                htmlFor={"comment"}
+                labelStyling={"block text-lg font-semibold"}
+                labelText={"Post Comment:"}
+                inputId={"comment"}
+                inputValue={newComment}
+                inputOnChange={handleNewCommentChange}
+                inputPlaceholder={"Write Comment here"}
+                inputClassName={`mt-2 p-2 border border-gray-300 rounded-lg w-full ${
+                  newCommentError ? "border-red-500" : ""
+                }`}
+                commentError={
+                  newCommentError && (
+                    <p className="text-red-500 text-sm">{newCommentError}</p>
+                  )
+                }
+                buttonText={"Post"}
+              />
             )}
 
             <Button
@@ -245,38 +236,28 @@ const ArtisteTweets = () => {
 
                     <div className="flex flex-col">
                       {editCommentId === comment.id ? (
-                        <form
+                        <CustomForm
                           onSubmit={(e) => handleEditComment(e, comment.id)}
-                          className="mt-2"
-                        >
-                          <label
-                            htmlFor={`edit-comment-${comment.id}`}
-                            className="block text-lg font-semibold"
-                          >
-                            Edit Comment:
-                          </label>
-                          <input
-                            type="text"
-                            id={`edit-comment-${comment.id}`}
-                            value={editComment}
-                            onChange={handleEditCommentChange}
-                            placeholder="Edit Comment here"
-                            className={`mt-2 p-2 border border-gray-300 rounded-lg w-full ${
-                              editCommentError ? "border-red-500" : ""
-                            }`}
-                          />
-                          {editCommentError && (
-                            <p className="text-red-500 text-sm">
-                              {editCommentError}
-                            </p>
-                          )}
-                          <button
-                            type="submit"
-                            className="mt-2 bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 mb-2"
-                          >
-                            Edit
-                          </button>
-                        </form>
+                          formStyling="mt-2"
+                          htmlFor={`edit-comment-${comment.id}`}
+                          labelStyling={"block text-lg font-semibold"}
+                          labelText={"Edit Comment:"}
+                          inputId={`edit-comment-${comment.id}`}
+                          inputValue={editComment}
+                          inputOnChange={handleEditCommentChange}
+                          inputPlaceholder={"Edit Comment here"}
+                          inputClassName={`mt-2 p-2 border border-gray-300 rounded-lg w-full ${
+                            editCommentError ? "border-red-500" : ""
+                          }`}
+                          commentError={
+                            editCommentError && (
+                              <p className="text-red-500 text-sm">
+                                {editCommentError}
+                              </p>
+                            )
+                          }
+                          buttonText={"Edit"}
+                        />
                       ) : (
                         <Button
                           styling={
